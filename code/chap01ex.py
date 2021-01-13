@@ -51,6 +51,22 @@ def ValidatePregnum(resp):
     return True
 
 
+def ValidatePregnum_2(resp):
+    """Validates Pregnum alternative
+    
+    """
+    preg = nsfg.ReadFemPreg()
+    preg_map = nsfg.MakePregMap(preg)
+    cid_pregnum = resp.set_index('caseid')
+
+    for c_id, pregnum in cid_pregnum.pregnum.items():
+        if pregnum != len(preg_map[c_id]):
+            print(f"error caseid: {c_id}")
+            return False
+    return True
+
+
+
 def main(script):
     """Tests the functions in this module.
 
@@ -58,6 +74,7 @@ def main(script):
     """
     resp = ReadFemResp()
     assert(ValidatePregnum(resp))
+    assert(ValidatePregnum_2(resp))
     assert(len(resp) == 7643)
     assert(resp.pregnum.value_counts()[4] == 611)
 
