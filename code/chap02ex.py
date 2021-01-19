@@ -9,6 +9,7 @@ from __future__ import print_function
 
 import sys
 from operator import itemgetter
+from typing import OrderedDict
 
 import first
 import thinkstats2
@@ -21,7 +22,9 @@ def Mode(hist):
 
     returns: value from Hist
     """
-    return 0
+    mode = max((freq, val) for val, freq in hist.Items())[1]
+    
+    return mode
 
 
 def AllModes(hist):
@@ -31,7 +34,39 @@ def AllModes(hist):
 
     returns: iterator of value-freq pairs
     """
-    return []
+    modes = sorted(hist.Items(), key=itemgetter(1) ,reverse=True)
+
+    return modes
+
+def WeightDifference(live, firsts, others):
+    """
+    Using the variable "totalwgt_lb", investigate whether first
+    babies are lighter or heavier than others.  Compute Cohen's d
+    to quantify the difference between the groups.  How does it
+    compare to the difference in pregnancy length?
+    """
+    
+    live.__name__ = 'live'
+    firsts.__name__ = 'firsts'
+    others.__name__ = 'others'
+
+    mean_d = {}
+    var_d = {}
+    totalwgt_serie_d = {}
+
+    for df in live, firsts, others:
+        print(f"the totalwgt mean of {df.__name__} is {df.totalwgt_lb.mean()}")
+        print(f"the totalwgt var of {df.__name__} is {df.totalwgt_lb.var()}\n")
+        mean_d[df.__name__] = df.totalwgt_lb.mean()
+        var_d[df.__name__] = df.totalwgt_lb.var()     
+        totalwgt_serie_d[df.__name__] = df.totalwgt_lb
+
+    d = thinkstats2.CohenEffectSize(totalwgt_serie_d['firsts'], totalwgt_serie_d['others'])
+
+    print(f"Difference in mean = {mean_d['firsts']-mean_d['others']}")
+    print(f"Difference in mean in % = {(mean_d['firsts']-mean_d['others'])/mean_d['live']*100}")
+    print(f"Cohen's d = {d}")
+    return d
 
 
 def main(script):
@@ -41,6 +76,10 @@ def main(script):
     """
     live, firsts, others = first.MakeFrames()
     hist = thinkstats2.Hist(live.prglngth)
+
+    # test
+    WeightDifference(live, firsts, others)
+    assert WeightDifference(live, firsts, others) == -0.088672927072602
 
     # test Mode    
     mode = Mode(hist)
