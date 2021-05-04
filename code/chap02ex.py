@@ -55,7 +55,7 @@ def WeightDifference(live, firsts, others):
     totalwgt_serie_d = {}
 
     for df in live, firsts, others:
-        print(f"The Mean the totalwgt of {df.__name__} is {df.totalwgt_lb.mean()}")
+        print(f"The Mean totalwgt of {df.__name__} is {df.totalwgt_lb.mean()}")
         print(f"The totalwgt var of {df.__name__} is {df.totalwgt_lb.var()}\n")
         mean_d[df.__name__] = df.totalwgt_lb.mean()
         var_d[df.__name__] = df.totalwgt_lb.var()     

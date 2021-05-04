@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\duukv\\anaconda3\\envs\\env_think_stats\\python.exe"
+    "python.pythonPath": "C:\\Users\\duukv\\anaconda3\\envs\\env_think_stats\\python.exe",
+    "python.analysis.extraPaths": ["code", "C:\\Users\\duukv\\Documents\\python\\projects\\ThinkStats2\\code"]
 }
