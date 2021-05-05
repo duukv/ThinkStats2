@@ -6,6 +6,7 @@ License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 """
 
 from __future__ import print_function
+import os
 
 import numpy as np
 import sys
@@ -88,6 +89,7 @@ def main():
 
     script: string script name
     """
+    os.chdir("code")
     live, _, _ = first.MakeFrames()
     PairWiseDifferences(live)
 
