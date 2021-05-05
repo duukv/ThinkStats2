@@ -69,7 +69,7 @@ def PairWiseDifferences(live):
     preg_map = nsfg.MakePregMap(live)
 
     diffs = []
-    for caseid, indices in preg_map.items():
+    for _, indices in preg_map.items():
         lengths = live.loc[indices].prglngth.values
         if len(lengths) >= 2:
             diffs.extend(Diffs(lengths))
@@ -83,12 +83,12 @@ def PairWiseDifferences(live):
                    ylabel='PMF')
 
 
-def main(script):
+def main():
     """Tests the functions in this module.
 
     script: string script name
     """
-    live, firsts, others = first.MakeFrames()
+    live, _, _ = first.MakeFrames()
     PairWiseDifferences(live)
 
     # test PmfMean and PmfVar
@@ -101,8 +101,8 @@ def main(script):
     assert(var == pmf.Var())
     print('mean/var preg length', mean, var)
 
-    print('%s: All tests passed.' % script)
+    print('%s: All tests passed.' % sys.argv[0])
 
 
 if __name__ == '__main__':
-    main(*sys.argv)
+    main()

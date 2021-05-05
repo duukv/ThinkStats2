@@ -144,7 +144,7 @@ def MakeComparison(firsts, others):
                    axis=[27, 46, 0, 2700])
 
 
-def main(script):
+def main():
     live, firsts, others = MakeFrames()
 
     MakeHists(live)
@@ -154,7 +154,6 @@ def main(script):
 
 
 if __name__ == '__main__':
-    import sys
-    main(*sys.argv)
+    main()
 
 
