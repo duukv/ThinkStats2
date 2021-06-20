@@ -13,7 +13,9 @@ import density
 import hinc
 import thinkplot
 import thinkstats2
+import os
 
+os.chdir('code')
 """This file contains a solution to an exercise in Think Stats:
 
 The distribution of income is famously skewed to the right.  In this
@@ -84,7 +86,7 @@ def InterpolateSample(df, log_upper=6.0):
     # each range
     arrays = []
     for _, row in df.iterrows():
-        vals = np.linspace(row.log_lower, row.log_upper, row.freq)
+        vals = np.linspace(row.log_lower, row.log_upper, int(row.freq))
         arrays.append(vals)
 
     # collect the arrays into a single sample
