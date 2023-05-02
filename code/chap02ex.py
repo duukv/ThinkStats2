@@ -7,10 +7,13 @@ License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 
 from __future__ import print_function
 
+import os
 import sys
 from operator import itemgetter
 
-from ts2_code import first
+os.chdir(".\code")
+import first
+
 import thinkstats2
 
 
@@ -21,7 +24,10 @@ def Mode(hist):
 
     returns: value from Hist
     """
-    return 0
+    freq_dict = {v: k for k, v in hist.Items()}
+    freq_list = [v for k, v in hist.Items()]
+    highest = sorted(freq_list, reverse=True)[0]
+    return freq_dict[highest]
 
 
 def AllModes(hist):
@@ -31,7 +37,9 @@ def AllModes(hist):
 
     returns: iterator of value-freq pairs
     """
-    return []
+    modes = [(k, v) for k, v in hist.Items()]
+    modes.sort(key=lambda x: x[1], reverse=True)
+    return modes
 
 
 def main(script):
@@ -42,7 +50,8 @@ def main(script):
     live, firsts, others = first.MakeFrames()
     hist = thinkstats2.Hist(live.prglngth)
 
-    # test Mode
+    # # test Mode
+    Mode(hist)
     mode = Mode(hist)
     print("Mode of preg length", mode)
     assert mode == 39, mode
@@ -53,6 +62,14 @@ def main(script):
 
     for value, freq in modes[:5]:
         print(value, freq)
+
+    print("mean totalwgt_lb live births ", live["totalwgt_lb"].mean())
+    print("mean totalwgt_lb firsts births ", firsts["totalwgt_lb"].mean())
+    print("mean totalwgt_lb others births ", others["totalwgt_lb"].mean())
+    print(
+        "cohens effectsize ",
+        thinkstats2.CohenEffectSize(firsts["totalwgt_lb"], others["totalwgt_lb"]),
+    )
 
     print("%s: All tests passed." % script)
 
