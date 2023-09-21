@@ -2822,7 +2822,7 @@ class FixedWidthVariables(object):
         self.colspecs = self.colspecs.astype(int).values.tolist()
         self.names = variables["name"]
 
-    def ReadFixedWidth(self, filename, **options):
+    def ReadFixedWidth(self, filename, **options) -> pandas.DataFrame:
         """Reads a fixed width ASCII file.
 
         filename: string filename
@@ -2936,9 +2936,7 @@ def PercentileRow(array, p):
     """
     rows, cols = array.shape
     index = int(rows * p / 100)
-    return array[
-        index,
-    ]
+    return array[index,]
 
 
 def PercentileRows(ys_seq, percents):
@@ -2958,9 +2956,7 @@ def PercentileRows(ys_seq, percents):
     array = np.zeros((nrows, ncols))
 
     for i, ys in enumerate(ys_seq):
-        array[
-            i,
-        ] = ys
+        array[i,] = ys
 
     array = np.sort(array, axis=0)
 
